@@ -1,0 +1,99 @@
+{['Home', 'About', 'Services', 'Contact'].map((item, index) => {
+  const isAbout = item === 'About';
+  const isServices = item === 'Services';
+  const isTooltipVisible = (isAbout && showAboutTooltip) || (isServices && showServicesTooltip);
+
+  return (
+    <div
+      key={item}
+      className={`w-full animate-fadeInUp ${isTooltipVisible ? 'blur-sm' : ''}`}
+      style={{ animationDelay: `${index * 0.1 + 0.2}s` }}
+    >
+      {/* Top-level Menu Item */}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => {
+            if (isAbout) {
+              setShowAboutTooltip(prev => !prev);
+              setShowServicesTooltip(false);
+            } else if (isServices) {
+              setShowServicesTooltip(prev => !prev);
+              setShowAboutTooltip(false);
+            } else {
+              handleMobileNavClick(item.toLowerCase());
+              setShowAboutTooltip(false);
+              setShowServicesTooltip(false);
+            }
+          }}
+          className="flex items-center gap-2 text-left hover:text-pink transition"
+        >
+          <span>{item}</span>
+          {(isAbout || isServices) && (
+            <HiChevronDown
+              className={`
+                text-pink-500 transition-transform duration-300 
+                ${isTooltipVisible ? 'rotate-180' : ''}
+              `}
+              size={18}
+            />
+          )}
+        </button>
+      </div>
+
+      {/* Blur & Centered Tooltip Overlay */}
+      {isTooltipVisible && (
+        <div
+          className="fixed inset-0 z-40 flex justify-center items-center backdrop-blur-sm bg-transparent"
+          onClick={() => {
+            setShowAboutTooltip(false);
+            setShowServicesTooltip(false);
+          }}
+        >
+          <div
+            className="bg-zinc-900 text-white rounded-md shadow-lg p-6 w-[280px]"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Render submenu content */}
+            {isAbout &&
+              aboutList.map((text, idx) => (
+                <button
+                  key={idx}
+                  className="block w-full py-2 text-sm text-left hover:text-pink transition"
+                  onClick={() => {
+                    const id = text.toLowerCase().replace(/\s+/g, '-');
+                    const section = document.getElementById(id);
+                    if (section) {
+                      section.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    setMobileMenuOpen(false);
+                    setShowAboutTooltip(false);
+                  }}
+                >
+                  {text}
+                </button>
+              ))}
+
+            {isServices &&
+              servicesList.map((service, idx) => (
+                <button
+                  key={idx}
+                  className="block w-full py-2 text-sm text-left hover:text-pink transition"
+                  onClick={() => {
+                    const id = service.name.toLowerCase().replace(/\s+/g, '-');
+                    const section = document.getElementById(id);
+                    if (section) {
+                      section.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    setMobileMenuOpen(false);
+                    setShowServicesTooltip(false);
+                  }}
+                >
+                  {service.name}
+                </button>
+              ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+})}
