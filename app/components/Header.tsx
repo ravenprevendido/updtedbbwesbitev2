@@ -13,6 +13,7 @@ import { RiMenu4Line } from "react-icons/ri";
 import ToolTip from './ToolTip'
 import { useRouter, useSearchParams } from 'next/navigation';
 import TooltipServices from './TooltipServices';
+import {Service, services} from '@/data/services'
 import AboutTooltip from './AboutTooltip';
 import { AnimatePresence, motion } from 'framer-motion';
 // header props
@@ -65,22 +66,20 @@ const router = useRouter()
 
   const aboutList = ['About Us', 'Mission and Vission', 'Why Choose Burnbox Printing?'];
   
-  const servicesList = [
-  {
-    name: "Offset Printing / Forms & Reciept",
-  },
-  { name: "Corporate Giveaways" },
-  { name: "Large format Services" },
-  { name: "Stickers & Labels" },
-  { name: "Signage" },
-  { name: "Marketing Collaterals" },
-  { name: "Wall Mural" },
-  { name: "Glass Frosted Sticker" },
-  { name: "Transit adds" },
-  { name: "Graphic Design" },
-  { name: "Logo design" },
-  { name: "Other services.", nestedTooltip: ["Receipt types", "Forms customization", "Bulk orders"],
- },
+
+const servicesList: Service[] = [
+  { id: 1, name: "Offset Printing / Forms & Receipt", image: "/images/offset.png" },
+  { id: 2, name: "Corporate Giveaways", image: "/images/giveaways.png" },
+  { id: 3, name: "Large format Services", image: "/images/large-format.png" },
+  { id: 4, name: "Stickers & Labels", image: "/images/stickers.png" },
+  { id: 5, name: "Signage", image: "/images/signage.png" },
+  { id: 6, name: "Marketing Collaterals", image: "/images/marketing.png" },
+  { id: 7, name: "Wall Mural", image: "/images/wall-mural.png" },
+  { id: 8, name: "Glass Frosted Sticker", image: "/images/glass.png" },
+  { id: 9, name: "Transit ads", image: "/images/transit.png" },
+  { id: 10, name: "Graphic Design", image: "/images/graphic.png" },
+  { id: 11, name: "Logo design", image: "/images/logo.png" },
+  { id: 12, name: "Other services.", image: "/images/other.png", nestedTooltip: ["Receipt types", "Forms customization", "Bulk orders"] },
 ];
   const buttons = ['wallmural', 'labelsticker', 'photocanvas', 'pvclanyard']
   
@@ -122,7 +121,6 @@ const router = useRouter()
     handleResize();
     window.addEventListener('resize', handleResize);
 
-
     return () => {
       window.removeEventListener('resize', handleResize);
     }
@@ -135,7 +133,6 @@ const router = useRouter()
   const handleClickTooltipServices = () => {
     setShowServicesTooltip(!showServicesTooltip)
   }
-
 
   useEffect(() => {
     if(searchValue) {
@@ -281,7 +278,7 @@ const handleMobileNavClick = (id: string) => {
           ref={tooltipRef}
           onMouseEnter={handleMouseEnterTooltip}
           onMouseLeave={handleMouseLeaveTooltip}
-          >
+          >           
           <TooltipServices services={servicesList} />
           </div>
         )}

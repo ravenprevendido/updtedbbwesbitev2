@@ -6,6 +6,7 @@ import ServicesPages from '../components/ServicesPages';
 import Footer from '../components/Footer';
 import ServicesInfo from '../components/ServiceInfo';
 import { useState } from 'react';
+import Services from '../components/Services';
 
 const page = () => {
  const [searchValue, setSearchValue] = useState("");
@@ -14,7 +15,9 @@ const page = () => {
     <>
     <Suspense fallback={<></>}>
     <Header searchValue={searchValue} setSearchValue={setSearchValue} />
-         <ServicesInfo searchValue={searchValue} /></Suspense>
+    </Suspense>
+         {/* <ServicesInfo searchValue={searchValue} /> */}
+         <Services/>
           <Footer />
     </>
   )
